@@ -1,36 +1,32 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
-@SuppressWarnings("serial")
-public class ChessPanel extends JPanel{
+public class ChessPanel extends JPanel {
 	private ImageIcon map;					
   	private ImageIcon blackchess;			
   	private ImageIcon whitechess;			
   	public int isChessOn [][];				
-    protected boolean win = false;          
-    protected int win_bw;                   
-    protected int deep = 3, weight = 7;    
-    public int drawn_num = 110;           
-    int chess_num = 0;                      
-    public int[][] pre = new int[drawn_num + 1][2];    
-    public int sbw = 0;                          
-    public int bw = 0;                           
+    protected boolean win = false;
+    protected int win_bw;
+    protected int deep = 3, weight = 7;
+    public int drawn_num = 110;
+    int chess_num = 0;
+    public int[][] pre = new int[drawn_num + 1][2];
+    public int sbw = 0;
+    public int bw = 0;
     protected int x_max = 15, x_min = 0;
     protected int y_max = 15, y_min = 0;
-    protected boolean able_flag = true;       
+    protected boolean able_flag = true;
   	private int h;							
  	private int w;							
- 	private int insx;						
- 	private int insy;
  	private Point mousePoint;				
  	private int winer;						
-    private boolean humanhuman=false;       
- 	private int plast=0;					
+    private boolean humanhuman=false;
  	public int BLACK_ONE;					
  	public int WHITE_ONE;					
  	public int NONE_ONE;					
  	public int N;
- 	public ChessPanel(){}
+ 	public ChessPanel() {}
  	public ChessPanel(ImageIcon r_map,ImageIcon r_blackchess,ImageIcon r_whitechess) {
  		N=15;
  		map=new ImageIcon();
@@ -46,58 +42,54 @@ public class ChessPanel extends JPanel{
    		isChessOn=new int[N][N];
     	h=blackchess.getIconHeight()*(N-1);
     	w=blackchess.getIconWidth()*(N-1);
-    	insx=0;
-    	insy=0;
     	mousePoint=new Point();
     }
-    public void reset(){							
+    public void reset() {							
   		winer=NONE_ONE;
   		for(int i=0;i<N;i++)
-  			for(int j=0;j<N;j++){
+  			for(int j=0;j<N;j++) {
   				isChessOn[i][j]=NONE_ONE;
   			}
-  		chess_num = 0;  
-  		win = false; 
+  		chess_num = 0;
+  		win = false;
   		win_bw=2;
   		bw = 0;
-  		x_max = 15; x_min = 0;
+  		x_max = 15;x_min = 0;
   	    y_max = 15;y_min = 0;
   		repaint();
     }
-    public void showMousePos(Point p){				
+    public void showMousePos(Point p) {				
   	    int cw;
   	    cw=h/N;
   	    mousePoint.x=p.x/cw;
   	    mousePoint.y=p.y/cw;
   	    repaint();
     }
-    public Point getPoint(int x,int y){
+    public Point getPoint(int x,int y) {
     	int cw;
-  	    insx=x;
-  	    insy=y;
   	    cw=h/N;
   	  Point r=new Point(x/cw,y/cw);
   	  return r;
     }
-  public void gameOver(int r_winer){			
+  public void gameOver(int r_winer) {			
   	winer=r_winer;
   }
-  public void paint(Graphics g){				
+  public void paint(Graphics g) {				
     super.paint(g);
-    paintChessMap(g); 
+    paintChessMap(g);
     paintChess(g);
-    if(winer==BLACK_ONE){
-    	g.drawString(new String("游戏结束！黑棋获胜！"),500,200);
+    if(winer==BLACK_ONE) {
+    	g.drawString(new String("Black Win!"),500,200);
     }
-    else if(winer==WHITE_ONE){
-    	g.drawString(new String("游戏结束！白棋获胜！"),500,200);
+    else if(winer==WHITE_ONE) {
+    	g.drawString(new String("White Win!"),500,200);
     }
   }
-  private void paintChessMap(Graphics g){		
+  private void paintChessMap(Graphics g) {		
   	map.paintIcon(this,g,10,10);
   	int j;
     g.setColor(Color.BLACK);
-    for(j=0;j<N;j++){							
+    for(j=0;j<N;j++) {							
     	g.drawLine(h/N/2,h/N*j+h/N/2,w-w/N+(N%2)*(h/N/2),h/N*j+h/N/2);
     	g.drawLine(w/N*j+h/N/2,h/N/2,w/N*j+h/N/2,h-h/N+(N%2)*(h/N/2));
     }
@@ -107,14 +99,14 @@ public class ChessPanel extends JPanel{
     g.fillRect(w/N*3+h/N/2-3,h/N*11+h/N/2-3,6,6);
     g.fillRect(w/N*11+h/N/2-3,h/N*11+h/N/2-3,6,6);
   }
-  private void paintChess(Graphics g){			
+  private void paintChess(Graphics g) {			
   		int i,j;
   		for(i=0;i<N;i++)
-  			for(j=0;j<N;j++){
-  				if(isChessOn[i][j]==BLACK_ONE){
+  			for(j=0;j<N;j++) {
+  				if(isChessOn[i][j]==BLACK_ONE) {
   					blackchess.paintIcon(this,g,w/N*i,h/N*j);
   				}
-  				else if(isChessOn[i][j]==WHITE_ONE){
+  				else if(isChessOn[i][j]==WHITE_ONE) {
   					whitechess.paintIcon(this,g,w/N*i,h/N*j);
   				}	
   			}
@@ -123,7 +115,7 @@ public class ChessPanel extends JPanel{
       int x, y, mx = -100000000;
       x = y = -1;
       int[][] bests = getBests( bwf );
-      for (int k = 0; k < bests.length; k++) {
+      for (int k = 0;k < bests.length;k++) {
           int i = bests[k][0];
           int j = bests[k][1];
           if (getType(i, j, bwf) == 1) {
@@ -156,8 +148,7 @@ public class ChessPanel extends JPanel{
 		step++;
 		System.out.println("step "+step+":-----------------------------------------------");
 		for(int i=0;i<15;i++,System.out.print("\n"))
-			for(int j=0;j<15;j++)
-				{
+			for(int j=0;j<15;j++) {
 					if(isChessOn[j][i]!=2)System.out.print(isChessOn[j][i]);
 					else	System.out.print(isChessOn[j][i]);
 				}	
@@ -169,7 +160,7 @@ public class ChessPanel extends JPanel{
           wined(bwf);
       if (!flag && chess_num >= drawn_num) {
           win = true;
-          String str = drawn_num + "步没分胜负,判和棋!";
+          String str = drawn_num + "Draw!";
           JOptionPane.showMessageDialog(null,str);
           return;
       }
@@ -180,7 +171,7 @@ public class ChessPanel extends JPanel{
           return evaluate();
       }
       int[][] rt = getBests(1 - sbw);
-      for (int i = 0; i < rt.length; i++) {
+      for (int i = 0;i < rt.length;i++) {
           int x = rt[i][0];
       	int y = rt[i][1];
       	if (getType(x, y, 1 - sbw) == 1)   
@@ -207,7 +198,7 @@ public class ChessPanel extends JPanel{
           return evaluate();
       }
       int[][] rt = getBests(sbw);
-      for (int i = 0; i < rt.length; i++) {
+      for (int i = 0;i < rt.length;i++) {
           int x = rt[i][0];
           int y = rt[i][1];
           int type = getType(x, y, sbw);
@@ -238,8 +229,8 @@ public class ChessPanel extends JPanel{
       int n = 0;
       int type_1,type_2;
       int[][] rt = new int[(i_max-i_min) * (j_max-j_min)][3];
-      for ( int i = i_min; i < i_max; i++) 
-      	for (int j = j_min; j < j_max; j++)
+      for ( int i = i_min;i < i_max;i++) 
+      	for (int j = j_min;j < j_max;j++)
       		if (isChessOn[i][j] == 2) {
                   type_1 = getType(i, j, bwf);
                   type_2 = getType(i, j, 1 - bwf);
@@ -269,7 +260,7 @@ public class ChessPanel extends JPanel{
           throw new IllegalArgumentException("position x,y must be empty!..");
       }
       int i;
-      for (i = 1; x + i * ex < 15 && x + i * ex >= 0 && y + i * ey < 15 && y + i * ey >= 0; i++) {
+      for (i = 1;x + i * ex < 15 && x + i * ex >= 0 && y + i * ey < 15 && y + i * ey >= 0;i++) {
           if (isChessOn[x + i * ex][y + i * ey] == bwf)
               rt_1++;
           else if(isChessOn[x + i * ex][y + i * ey] == 2) {
@@ -302,7 +293,7 @@ public class ChessPanel extends JPanel{
       	ok_1++;
       	flag_mid1 = false;
       }
-      for (i = 1; x - i * ex >= 0 && x - i * ex < 15 && y - i * ey >= 0 && y - i * ey < 15; i++) {
+      for (i = 1;x - i * ex >= 0 && x - i * ex < 15 && y - i * ey >= 0 && y - i * ey < 15;i++) {
           if (isChessOn[x - i * ex][y - i * ey] == bwf)
               rt_2++;
           else if(isChessOn[x - i * ex][y - i * ey] == 2) {
@@ -340,7 +331,7 @@ public class ChessPanel extends JPanel{
       	ok = ok_1 + ok_2;
       	return new int[] {rt, ok};
       }
-      else if( flag_mid1 && flag_mid2 ){
+      else if( flag_mid1 && flag_mid2 ) {
       	int temp = flag_i1 + flag_i2 - 1;
       	if(temp >= 5)
       		return new int[] {temp, 2};
@@ -370,12 +361,12 @@ public class ChessPanel extends JPanel{
   }
   private Boolean makesense(int x, int y, int ex, int ey, int bwf) {
       int rt = 1;
-      for (int i = 1; x + i * ex < 15 && x + i * ex >= 0 && y + i * ey < 15 && y + i * ey >= 0 && rt < 5; i++)
+      for (int i = 1;x + i * ex < 15 && x + i * ex >= 0 && y + i * ey < 15 && y + i * ey >= 0 && rt < 5;i++)
           if (isChessOn[x + i * ex][y + i * ey] != 1 - bwf)
               rt++;
           else
               break;
-      for (int i = 1; x - i * ex >= 0 && x - i * ex < 15 && y - i * ey >= 0 && y - i * ey < 15 && rt < 5; i++)
+      for (int i = 1;x - i * ex >= 0 && x - i * ex < 15 && y - i * ey >= 0 && y - i * ey < 15 && rt < 5;i++)
           if (isChessOn[x - i * ex][y - i * ey] != 1 - bwf)
               rt++;
           else
@@ -386,34 +377,34 @@ public class ChessPanel extends JPanel{
   	if (isChessOn[x][y] != 2)
           return -1;
   	int[][] types = new int[4][2];
-  	types[0] = count(x, y, 0, 1, bwf);   
-      types[1] = count(x, y, 1, 0, bwf);   
-      types[2] = count(x, y, -1, 1, bwf);  
-      types[3] = count(x, y, 1, 1, bwf);   
+  	types[0] = count(x, y, 0, 1, bwf);
+      types[1] = count(x, y, 1, 0, bwf);
+      types[2] = count(x, y, -1, 1, bwf);
+      types[3] = count(x, y, 1, 1, bwf);
       int longfive = 0;
       int five_OR_more = 0;
       int four_died = 0, four_live = 0;
       int three_died = 0, three_live = 0;
       int two_died  = 0, two_live = 0;
-      for (int k = 0; k < 4; k++) {
+      for (int k = 0;k < 4;k++) {
       	if (types[k][0] > 5) {  
-      		longfive++;              
+      		longfive++;
       		five_OR_more++;
       	}
       	else if (types[k][0] == 5)
-      		five_OR_more++;          
+      		five_OR_more++;
           else if (types[k][0] == 4 && types[k][1] == 2)
-          	four_live++;             
+          	four_live++;
           else if (types[k][0] == 4 && types[k][1] != 2)
-          	four_died++;             
+          	four_died++;
           else if (types[k][0] == 3 && types[k][1] == 2)
-          	three_live ++;           
+          	three_live ++;
           else if (types[k][0] == 3 && types[k][1] != 2)
-          	three_died++;            
+          	three_died++;
           else if (types[k][0] == 2 && types[k][1] == 2)
-          	two_live++;              
+          	two_live++;
           else if (types[k][0] == 2 && types[k][1] != 2)
-          	two_died++;              
+          	two_died++;
           else
               ;
       }
@@ -426,27 +417,27 @@ public class ChessPanel extends JPanel{
       		return 22;
       }
       if (five_OR_more != 0)
-          return 1;   
+          return 1;
       if (four_live != 0 || four_died >= 2 || four_died != 0 && three_live  != 0)
-          return 2;   
+          return 2;
       if (three_live  >= 2)
-          return 3;   
+          return 3;
       if (three_died != 0 && three_live  != 0)
-          return 4;   
+          return 4;
       if (four_died != 0)
-          return 5;   
+          return 5;
       if (three_live  != 0)
-          return 6;   
+          return 6;
       if (two_live >= 2)
-          return 7;   
+          return 7;
       if (three_died != 0)
-          return 8;   
+          return 8;
       if (two_live != 0 && two_died != 0)
-          return 9;   
+          return 9;
       if (two_live != 0)
-          return 10;  
+          return 10;
       if (two_died != 0)
-          return 11;  
+          return 11;
       return 12;
   }
   protected int evaluate() {
@@ -459,8 +450,8 @@ public class ChessPanel extends JPanel{
       int j_min=(y_min==0 ? y_min:y_min-1);
       int i_max=(x_max==15 ? x_max:x_max+1);
       int j_max=(y_max==15 ? y_max:y_max+1);
-      for (int i = i_min; i < i_max; i++)
-          for (int j = j_min; j < j_max; j++)
+      for (int i = i_min;i < i_max;i++)
+          for (int j = j_min;j < j_max;j++)
               if (isChessOn[i][j] == 2) {
                   int type = getType(i, j, 1 - sbw );
                   if(type == 1)      
@@ -490,7 +481,7 @@ public class ChessPanel extends JPanel{
       pre[chess_num][1] = y;
       chess_num++;
   }
-  public void resetMaxMin(int x,int y){
+  public void resetMaxMin(int x,int y) {
 		if(x-1>=0)
       	x_min = (x_min<x-1 ? x_min:x-1);
       if(x+1<=15)
@@ -550,13 +541,13 @@ public class ChessPanel extends JPanel{
   }
   public void wined(int bw) {
 	  boolean hh=getHumanhuman();
-	  if(!hh){           
+	  if(!hh) {           
   	       win = true;
            win_bw = bw;
            String str = (bw == sbw ? "You Win!" : "You Lose!");
            JOptionPane.showMessageDialog(null,str);
 	  }
-	  else{             
+	  else {             
 		  win = true;
           win_bw = bw;
           String str = (bw == BLACK_ONE ? "Black Win!" : "White Win!");

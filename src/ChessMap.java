@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-@SuppressWarnings("serial")
+import java.util.*;
 public class ChessMap extends JFrame {
 	private ImageIcon map;				
 	private ImageIcon blackchess;		
@@ -12,17 +12,17 @@ public class ChessMap extends JFrame {
 	private static final int FINAL_WIDTH = 450;
 	private static final int FINAL_HEIGHT = 500;
 	private JMenuBar menubar;			
-	private JMenu[] menu={new JMenu("Start"),new JMenu("Setting"),new JMenu("Help")};
-	private JMenuItem[] menuitem1={new JMenuItem("Restart"),new JMenuItem("Regret"),new JMenuItem("Exit")};
-	private JMenuItem[] menuitem2={new JMenuItem("Forbidden"),new JMenuItem("PVE"),new JMenuItem("PVP")};
-	private JMenuItem[] menuitem3={new JMenuItem("Rules"),new JMenuItem("About")};
-	private boolean haveai=true;		
+	private JMenu[] menu= {new JMenu("Start"),new JMenu("Setting"),new JMenu("Help")};
+	private JMenuItem[] menuitem1= {new JMenuItem("Restart"),new JMenuItem("Regret"),new JMenuItem("Exit")};
+	private JMenuItem[] menuitem2= {new JMenuItem("Forbidden"),new JMenuItem("PVE"),new JMenuItem("PVP")};
+	private JMenuItem[] menuitem3= {new JMenuItem("Rules"),new JMenuItem("About")};
+	private boolean haveai=true;
 	Mouseclicked mouseclicked=new Mouseclicked();
 	MouseMoved mousemoved=new MouseMoved();
 	Menuitemclicked menuclicked=new Menuitemclicked();
-	public ChessMap(){
+	public ChessMap() {
 		Font font = new Font("Dialog", Font.PLAIN, 12);
-		java.util.Enumeration keys = UIManager.getDefaults().keys();
+		Enumeration keys = UIManager.getDefaults().keys();
 		while (keys.hasMoreElements()) {
 			Object key = keys.nextElement();
 			Object value = UIManager.get(key);
@@ -42,8 +42,7 @@ public class ChessMap extends JFrame {
 		cp.reset();	
 		setVisible(true);
 	}
- 	public void init() 
- 	{
+ 	public void init() {
 		map=new ImageIcon(getClass().getResource("bg.jpg"));
 		blackchess=new ImageIcon(getClass().getResource("blackchess.gif"));
 		whitechess=new ImageIcon(getClass().getResource("whitechess.gif"));
@@ -83,12 +82,10 @@ public class ChessMap extends JFrame {
 		menuitem3[0].addActionListener(menuclicked);
 		menuitem3[1].addActionListener(menuclicked);
 	}
-	class Mouseclicked extends MouseAdapter		
-	{
-		public void mouseClicked(MouseEvent e)
-		{
-		  if(cp.win==false){
-			    if(haveai){           
+	class Mouseclicked extends MouseAdapter {
+		public void mouseClicked(MouseEvent e) {
+		  if(cp.win==false) {
+			    if(haveai) {           
     		              Point p1=new Point();
     		              p1=cp.getPoint(e.getX(),e.getY());
     		              int x=p1.x;
@@ -99,7 +96,7 @@ public class ChessMap extends JFrame {
                           if( cp.able_flag && cp.bw == 0) {
              	                 int type = cp.getType(x,y,cp.bw);
              	                 String str = null;
-             	                 switch(type){
+             	                 switch(type) {
              		             case 20: 
              			               str = "Long Even Forbidden!";
              			               break;
@@ -118,7 +115,7 @@ public class ChessMap extends JFrame {
      		              }
                           boolean flag=cp.haveWin(x, y, cp.bw);
                           cp.update( x, y );
-                         if( cp.chess_num == 1){  
+                         if( cp.chess_num == 1) {  
                       	 if(x-1>=0)
                      	          cp.x_min = x-1;
                          if(x-1<=15)
@@ -135,7 +132,7 @@ public class ChessMap extends JFrame {
                      return;
                  }
                  cp.putOne(cp.bw);
-			}else{                                        
+			} else {                                        
 				Point p1=new Point();
  		        p1=cp.getPoint(e.getX(),e.getY());
  		        int x=p1.x;
@@ -146,7 +143,7 @@ public class ChessMap extends JFrame {
                  if( cp.able_flag && cp.bw == 0) {
           	           int type = cp.getType(x,y,cp.bw);
           	           String str = null;
-          	           switch(type){
+          	           switch(type) {
           		       case 20: 
           			       str = "Long Even Forbidden!";
           			       break;
@@ -164,9 +161,9 @@ public class ChessMap extends JFrame {
           	           }
   		       }
                 boolean flag=cp.haveWin(x, y, cp.bw);
-                cp.update( x, y ); 
+                cp.update( x, y );
                 cp.repaint();
-              if( cp.chess_num == 1){  
+              if( cp.chess_num == 1) {  
               	if(x-1>=0)
                   	cp.x_min = x-1;
                   if(x-1<=15)
@@ -186,62 +183,57 @@ public class ChessMap extends JFrame {
     	} 
 		}
 	}
-	class MouseMoved implements MouseMotionListener		
-	{
-		public void mouseMoved(MouseEvent e)
-    	{
+	class MouseMoved implements MouseMotionListener	{
+		public void mouseMoved(MouseEvent e) {
     		cp.showMousePos(e.getPoint());
     	}
-    	public void mouseDragged(MouseEvent e)
-    	{}
+    	public void mouseDragged(MouseEvent e) {}
 	}
-	class Menuitemclicked implements ActionListener		
-	{
-		public void actionPerformed(ActionEvent e) 
-		{
+	class Menuitemclicked implements ActionListener	{
+		public void actionPerformed(ActionEvent e) {
       		JMenuItem target = (JMenuItem)e.getSource();
       		String actionCommand = target.getActionCommand();
-      		if(actionCommand.equals("Restart")){ 		
+      		if(actionCommand.equals("Restart")) { 		
         	   cp.reset();	
         	   if(cp.sbw==cp.WHITE_ONE)
-        		   cp.update(7, 7); 
+        		   cp.update(7, 7);
       		}
-      		if(actionCommand.equals("Rollback")){ 		
+      		if(actionCommand.equals("Rollback")) { 		
       			if(cp.win) {
         			JOptionPane.showMessageDialog(null,"Game Ended, Please Restart!");
         			return;
                 }
-        		if(cp.chess_num >= 2 && cp.bw == cp.sbw){
+        		if(cp.chess_num >= 2 && cp.bw == cp.sbw) {
         			cp.isChessOn[cp.pre[cp.chess_num-1][0]][cp.pre[cp.chess_num-1][1]] = 2;
         			cp.isChessOn[cp.pre[cp.chess_num-2][0]][cp.pre[cp.chess_num-2][1]] = 2;
         			cp.chess_num -= 2;
         			cp.repaint();
         		}
-        		else if(cp.chess_num >= 1 && cp.bw == 1-cp.sbw){
+        		else if(cp.chess_num >= 1 && cp.bw == 1-cp.sbw) {
         			cp.isChessOn[cp.pre[cp.chess_num-1][0]][cp.pre[cp.chess_num-1][1]] = 2;
         			cp.chess_num --;
        				cp.repaint();
        			}
       		}
-      		else if(actionCommand.equals("Exit")){ 		
+      		else if(actionCommand.equals("Exit")) { 		
         		System.exit(1);	
       		}
-      		else if(actionCommand.equals("Forbid")){     
+      		else if(actionCommand.equals("Forbid")) {     
         		Object[] options = { "No Forbidden", "Forbidden" };
         		int sel = JOptionPane.showOptionDialog(
           				null, "Your Pick:", "Forbidden",
           				JOptionPane.DEFAULT_OPTION,
           				JOptionPane.QUESTION_MESSAGE, null,
           				options, options[0]);
-          		if(sel==1){
+          		if(sel==1) {
                         cp.able_flag=true;
                         System.out.println("Forbidden");
-          		}else{
+          		} else {
           			    cp.able_flag=false;
                         System.out.println("No Forbidden");
           		}
           	}
-      		else if(actionCommand.equals("Robot")){            
+      		else if(actionCommand.equals("Robot")) {            
       			haveai=true;
       			Object[] options = { "Player First", "AI First" };
         		int sel = JOptionPane.showOptionDialog(
@@ -249,19 +241,19 @@ public class ChessMap extends JFrame {
           				JOptionPane.DEFAULT_OPTION,
           				JOptionPane.QUESTION_MESSAGE, null,
           				options, options[0]);
-          		if(sel==1){       
+          		if(sel==1) {       
           			    cp.sbw=cp.WHITE_ONE;
           			    cp.update(7, 7);
           			    System.out.println("AI First");
-          		}else{             
+          		} else {             
           			    cp.sbw=cp.BLACK_ONE;
           			    System.out.println("Player First");
           		}
       		}
-          	else if(actionCommand.equals("Human")){ 		
+          	else if(actionCommand.equals("Human")) { 		
         		haveai=false;	
         		cp.setHumanhuman(true);
-      		}else if(actionCommand.equals("Rule")){          
+      		} else if(actionCommand.equals("Rule")) {          
       			JOptionPane.showConfirmDialog(null,
       			" First forms five consecutive pieces of the same color on the horizontal, vertical, and diagonal directions of the board is the winner." +"\n"+
 				" Forbidden:" +"\n"+
@@ -270,13 +262,12 @@ public class ChessMap extends JFrame {
 				" Double Four, (including four, four, three), " + "\n"+
 				" and long even. Black can only win by four or three." ,"Rule",JOptionPane.CLOSED_OPTION,JOptionPane.INFORMATION_MESSAGE);
       		}
-      		else if(actionCommand.equals("About")){ 		
-        		JOptionPane.showConfirmDialog(null,"Creator: \n" +
-        				                                      "Shawn   https://github.com/XiaoSanchez\n","About",JOptionPane.CLOSED_OPTION,JOptionPane.INFORMATION_MESSAGE);	
+      		else if(actionCommand.equals("About")) { 		
+        		JOptionPane.showConfirmDialog(null,"Creator: \n" + "Shawn   https://github.com/XiaoSanchez\n","About",JOptionPane.CLOSED_OPTION,JOptionPane.INFORMATION_MESSAGE);	
       		}
     	}
 	}
   public static void main(String[] args) {
 	    new ChessMap();	
   }
-} 
+}

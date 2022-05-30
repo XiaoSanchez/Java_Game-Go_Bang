@@ -1,15 +1,7 @@
-
-
 import java.util.Comparator;
-
-/**
- * ≈≈–Ú Comparator
- */
 class ArrComparator implements Comparator<Object> {
     int column = 2;
-
-    int sortOrder = -1; 
-
+    int sortOrder = -1;
     public ArrComparator() {
     }
     public int compare(Object a, Object b) {
