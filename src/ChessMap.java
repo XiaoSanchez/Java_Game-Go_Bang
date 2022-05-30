@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.util.*;
 public class ChessMap extends JFrame {
 	private ImageIcon map;				
-	private ImageIcon blackchess;		
-	private ImageIcon whitechess;		
+	private ImageIcon BC;		
+	private ImageIcon WC;		
 	private ChessPanel cp;				
 	private JPanel east;
 	private JPanel west;
@@ -43,10 +43,10 @@ public class ChessMap extends JFrame {
 		setVisible(true);
 	}
  	public void init() {
-		map=new ImageIcon(getClass().getResource("bg.jpg"));
-		blackchess=new ImageIcon(getClass().getResource("blackchess.gif"));
-		whitechess=new ImageIcon(getClass().getResource("whitechess.gif"));
-		cp=new ChessPanel(map,blackchess,whitechess);
+		map=new ImageIcon(getClass().getResource("bg.jpeg"));
+		BC=new ImageIcon(getClass().getResource("BC.gif"));
+		WC=new ImageIcon(getClass().getResource("WC.gif"));
+		cp=new ChessPanel(map,BC,WC);
 		menubar=new JMenuBar();
 		menuitem1[0].setActionCommand("Restart");
 		menuitem1[1].setActionCommand("Rollback");

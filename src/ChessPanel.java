@@ -3,8 +3,8 @@ import java.awt.*;
 import java.util.*;
 public class ChessPanel extends JPanel {
 	private ImageIcon map;					
-  	private ImageIcon blackchess;			
-  	private ImageIcon whitechess;			
+  	private ImageIcon BC;			
+  	private ImageIcon WC;			
   	public int isChessOn [][];				
     protected boolean win = false;
     protected int win_bw;
@@ -27,21 +27,21 @@ public class ChessPanel extends JPanel {
  	public int NONE_ONE;					
  	public int N;
  	public ChessPanel() {}
- 	public ChessPanel(ImageIcon r_map,ImageIcon r_blackchess,ImageIcon r_whitechess) {
+ 	public ChessPanel(ImageIcon r_map,ImageIcon r_BC,ImageIcon r_WC) {
  		N=15;
  		map=new ImageIcon();
- 		blackchess=new ImageIcon();
- 		whitechess=new ImageIcon();
+ 		BC=new ImageIcon();
+ 		WC=new ImageIcon();
   		map=r_map;
-  		blackchess=r_blackchess;
-  		whitechess=r_whitechess;
+  		BC=r_BC;
+  		WC=r_WC;
   		NONE_ONE=2;
   		BLACK_ONE=0;
   		WHITE_ONE=1;
   		winer=NONE_ONE;
    		isChessOn=new int[N][N];
-    	h=blackchess.getIconHeight()*(N-1);
-    	w=blackchess.getIconWidth()*(N-1);
+    	h=BC.getIconHeight()*(N-1);
+    	w=BC.getIconWidth()*(N-1);
     	mousePoint=new Point();
     }
     public void reset() {							
@@ -104,10 +104,10 @@ public class ChessPanel extends JPanel {
   		for(i=0;i<N;i++)
   			for(j=0;j<N;j++) {
   				if(isChessOn[i][j]==BLACK_ONE) {
-  					blackchess.paintIcon(this,g,w/N*i,h/N*j);
+  					BC.paintIcon(this,g,w/N*i,h/N*j);
   				}
   				else if(isChessOn[i][j]==WHITE_ONE) {
-  					whitechess.paintIcon(this,g,w/N*i,h/N*j);
+  					WC.paintIcon(this,g,w/N*i,h/N*j);
   				}	
   			}
   }
