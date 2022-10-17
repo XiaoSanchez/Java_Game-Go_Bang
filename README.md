@@ -1,14 +1,12 @@
-<!-- ABOUT THE PROJECT -->
-## GoBang
 
-![product-screenshot](https://github.com/XiaoSanchez/GoBang/blob/main/src/ScreenShot.jpg)
+# Java Project: Go Bang
+Implements the functioning of GoBang that performs various functions like Player versus Player, Player versus Environment in the tasks, developed by using Java.
+## Features
 
-### Built With
 
-Java
+![App Screenshot](https://github.com/XiaoSanchez/GoBang/blob/main/src/ScreenShot.jpg)
 
-## Usage
+## License
 
-Have Fun!
+[MIT](https://choosealicense.com/licenses/mit/)
 
-SOURCES AND CREDITS:
