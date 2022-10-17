@@ -1,5 +1,5 @@
 
-# Java Project: Go Bang
+# Java Game: Go Bang
 Implements the functioning of GoBang that performs various functions like Player versus Player, Player versus Environment in the tasks, developed by using Java.
 ## Features
 
